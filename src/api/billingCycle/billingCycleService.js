@@ -5,6 +5,17 @@ BillingCycle.methods(['get', 'post', 'put', 'delete'])
 BillingCycle.updateOptions({ new: true, runValidators: true })
 BillingCycle.after('post', errorHandler).after('put', errorHandler)
 
+// BillingCycle.route('get', (req, res, next) => {
+//   BillingCycle.find({}, (err, docs) => {
+//     if (!err) {
+//       res.json(docs)
+//     } else {
+//       res.status(500).json({ errors: [error] })
+//     }
+//   })
+// })
+// acrescentei na função abaixo alguns recursos como skip e limit no req para a paginação
+
 BillingCycle.route('get', (req, res, next) => {
   BillingCycle.find({}, (err, docs) => {
     if (!err) {
@@ -12,7 +23,7 @@ BillingCycle.route('get', (req, res, next) => {
     } else {
       res.status(500).json({ errors: [error] })
     }
-  })
+  }).skip(req.query.skip).limit(req.query.limit)
 })
 
 BillingCycle.route('count', (req, res, next) => {
